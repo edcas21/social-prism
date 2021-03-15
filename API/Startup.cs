@@ -34,6 +34,7 @@ namespace API
                 }
             );
             services.AddControllers();
+            services.AddCors();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -47,9 +48,11 @@ namespace API
             app.UseHttpsRedirection();
 
             app.UseRouting();
-
+            // Cors goes between this comment
+            app.UseCors(policy => policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:4200"));
+            // and this one
             app.UseAuthorization();
-
+            
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
